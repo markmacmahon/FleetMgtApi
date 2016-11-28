@@ -53,14 +53,12 @@ public class FleetResourceCalculatorTest {
     public void shouldReturnManagerDistrict() throws Exception {
         // given:
         final FleetConstraints fleetConstraints = new FleetConstraints(new int[]{13, 15, 22}, 200, 5);
-        final int expectedOutcome = 6;
         final int expectedDistrict = 2; //not deterministic if there are other candidate matches
 
         // when:
         final FleetCalculation fleetCalculation = new FleetResourceCalculator(fleetConstraints).getFleetCalculation();
 
         // then:
-        assertThat(fleetCalculation.getFleetEngineers()).isEqualTo(expectedOutcome);
         assertThat(fleetCalculation.getFleetManagerLocation()).isEqualTo(expectedDistrict);
     }
 

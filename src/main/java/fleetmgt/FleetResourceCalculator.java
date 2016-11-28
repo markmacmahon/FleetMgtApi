@@ -45,7 +45,7 @@ public class FleetResourceCalculator {
         Assert.isTrue(fleetConstraints.getScooters().length <= MAX_DISTRICTS, "Too Many Districts");
         this.managerCapacity = withinRange(fleetConstraints.getManagerCapacity(), MIN_RESOURCE_CAPACITY, MAX_MANAGER_CAPACITY);
         this.engineerCapacity = withinRange(fleetConstraints.getEngineerCapacity(), MIN_RESOURCE_CAPACITY, MAX_ENGINEER_CAPACITY);
-        this.scootersPerDistrict = new int[fleetConstraints.getScooters().length];//fleetConstraints.getScooters();
+        this.scootersPerDistrict = new int[fleetConstraints.getScooters().length];
         for (int i = 0; i < fleetConstraints.getScooters().length; i++) {
             scootersPerDistrict[i] = fleetConstraints.getScooters()[i];
             Assert.isTrue(scootersPerDistrict[i] <= MAX_SCOOTERS_PER_DISTRICT, "Too Many Scooters for district " + i);
@@ -93,9 +93,7 @@ public class FleetResourceCalculator {
         int engineerCount = 0;
 
         if (isManager) {
-            if (slots <= managerCapacity) {
-                engineerCount++;
-            } else {
+            if (slots > managerCapacity) { //otherwise manager can take care of the district
                 final int slotsWithoutManager = slots - managerCapacity;
                 final int minEngineers = (int) Math.ceil(slotsWithoutManager / (double) engineerCapacity);
                 engineerCount += minEngineers;

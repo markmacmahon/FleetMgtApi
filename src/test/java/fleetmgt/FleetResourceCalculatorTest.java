@@ -35,11 +35,25 @@ public class FleetResourceCalculatorTest {
         assertThat(fleetCalculation.getFleetEngineers()).isEqualTo(expectedOutcome);
     }
 
+
+    @Test
+    public void shouldHandleManagerCapacityHigherThanScooterCount() throws Exception {
+        // given:
+        final FleetConstraints fleetConstraints = new FleetConstraints(new int[]{13, 15, 22}, 200, 5);
+        final int expectedOutcome = 6;
+
+        // when:
+        final FleetCalculation fleetCalculation = new FleetResourceCalculator(fleetConstraints).getFleetCalculation();
+
+        // then:
+        assertThat(fleetCalculation.getFleetEngineers()).isEqualTo(expectedOutcome);
+    }
+
     @Test
     public void shouldReturnManagerDistrict() throws Exception {
         // given:
         final FleetConstraints fleetConstraints = new FleetConstraints(new int[]{13, 15, 22}, 200, 5);
-        final int expectedOutcome = 7;
+        final int expectedOutcome = 6;
         final int expectedDistrict = 2; //not deterministic if there are other candidate matches
 
         // when:
@@ -114,6 +128,7 @@ public class FleetResourceCalculatorTest {
     public void shouldRejectNullConstraints() {
         // given:
         final FleetConstraints fleetConstraints = null;
+
         // when:
         new FleetResourceCalculator(fleetConstraints).getFleetCalculation();
     }
